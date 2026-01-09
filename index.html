@@ -9,13 +9,13 @@
   <!-- Bootstrap 5.3.3 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
     :root{
       --font: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
-      /* Core palette (will be overridden by theme) */
+      /* Core palette */
       --bg: #070915;
       --panel: rgba(255,255,255,.06);
       --panel-2: rgba(255,255,255,.08);
@@ -32,9 +32,12 @@
       --shadow: 0 16px 40px rgba(0,0,0,.35);
       --shadow-soft: 0 10px 30px rgba(0,0,0,.25);
 
-      --glow: none;          /* enabled in neon */
-      --glow-strong: none;
       --topbar-h: 74px;
+
+      /* Neon strength (default none; overridden in neon theme) */
+      --glow: none;
+      --glow-strong: none;
+      --glow-ultra: none;
     }
 
     /* Themes */
@@ -45,9 +48,12 @@
       --text: rgba(15, 23, 42, .92);
       --muted: rgba(15, 23, 42, .65);
       --border: rgba(15, 23, 42, .12);
+
       --glow: none;
       --glow-strong: none;
+      --glow-ultra: none;
     }
+
     html[data-theme="dark"]{
       --bg: #070915;
       --panel: rgba(255,255,255,.06);
@@ -55,27 +61,32 @@
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.68);
       --border: rgba(255,255,255,.12);
+
       --glow: none;
       --glow-strong: none;
-    }
-    html[data-theme="neon"]{
-      --bg: #05010f;
-      --panel: rgba(255,255,255,.06);
-      --panel-2: rgba(255,255,255,.09);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
-      --border: rgba(34,211,238,.25);
-      --glow: 0 0 10px rgba(34,211,238,.45);
-      --glow-strong: 0 0 22px rgba(34,211,238,.55);
+      --glow-ultra: none;
     }
 
-    /* Base */
+    /* 🔥 NEON BOOST */
+    html[data-theme="neon"]{
+      --bg: #04000c;
+      --panel: rgba(255,255,255,.06);
+      --panel-2: rgba(255,255,255,.095);
+      --text: rgba(255,255,255,.94);
+      --muted: rgba(255,255,255,.74);
+      --border: rgba(34,211,238,.30);
+
+      --glow: 0 0 14px rgba(34,211,238,.55);
+      --glow-strong: 0 0 26px rgba(34,211,238,.68);
+      --glow-ultra: 0 0 42px rgba(168,85,247,.62);
+    }
+
     body{
       font-family: var(--font);
       background:
-        radial-gradient(1100px 600px at 20% -10%, rgba(168,85,247,.24), transparent 60%),
-        radial-gradient(900px 540px at 90% 0%, rgba(34,211,238,.22), transparent 55%),
-        radial-gradient(900px 640px at 70% 110%, rgba(244,114,182,.16), transparent 55%),
+        radial-gradient(1100px 600px at 18% -10%, rgba(168,85,247,.30), transparent 60%),
+        radial-gradient(900px 540px at 92% 0%, rgba(34,211,238,.26), transparent 55%),
+        radial-gradient(900px 640px at 70% 110%, rgba(244,114,182,.18), transparent 55%),
         var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -98,10 +109,15 @@
       border-bottom: 1px solid var(--border);
     }
     html[data-theme="light"] .topbar{ background: rgba(255,255,255,.72); }
+    html[data-theme="neon"] .topbar{
+      border-bottom-color: rgba(34,211,238,.28);
+      box-shadow: var(--glow);
+    }
+
     .topbar-inner{
       width: 100%;
       display: grid;
-      grid-template-columns: 46px 1fr 1.6fr;
+      grid-template-columns: 46px 1fr 46px;
       gap: 12px;
       align-items: center;
       padding: 0 14px;
@@ -115,6 +131,11 @@
       display: grid;
       place-items: center;
       box-shadow: var(--shadow-soft);
+      user-select: none;
+    }
+    html[data-theme="neon"] .icon-btn{
+      border-color: rgba(34,211,238,.32);
+      box-shadow: var(--glow);
     }
     .icon-btn:active{ transform: translateY(1px); }
 
@@ -131,19 +152,27 @@
       border-radius: 14px;
       display: grid;
       place-items: center;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: .5px;
       background: linear-gradient(135deg, rgba(34,211,238,.35), rgba(168,85,247,.35));
       border: 1px solid rgba(255,255,255,.12);
       box-shadow: var(--glow);
     }
+    html[data-theme="neon"] .brand-badge{
+      box-shadow: var(--glow-strong);
+      border-color: rgba(34,211,238,.35);
+    }
     .brand-name{
-      font-weight: 800;
+      font-weight: 900;
       line-height: 1;
       font-size: 18px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      letter-spacing: .2px;
+    }
+    html[data-theme="neon"] .brand-name{
+      text-shadow: var(--glow);
     }
     .brand-sub{
       font-size: 12px;
@@ -153,41 +182,8 @@
       text-overflow: ellipsis;
     }
 
-    .search-wrap{
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-    .search{
-      width: 100%;
-      max-width: 560px;
-      height: 44px;
-      padding: 10px 14px 10px 42px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--text);
-      outline: none;
-    }
-    .search::placeholder{ color: rgba(255,255,255,.55); }
-    html[data-theme="light"] .search::placeholder{ color: rgba(15,23,42,.45); }
-    .search-icon{
-      position: absolute;
-      margin-left: 14px;
-      pointer-events: none;
-      opacity: .75;
-    }
-    .search-holder{
-      position: relative;
-      width: 100%;
-      max-width: 560px;
-    }
-
     /* Hero */
-    .hero{
-      padding: 34px 0 18px;
-    }
+    .hero{ padding: 34px 0 18px; }
     .hero-card{
       border: 1px solid var(--border);
       background: var(--panel);
@@ -197,28 +193,33 @@
       position: relative;
       overflow: hidden;
     }
+    html[data-theme="neon"] .hero-card{
+      border-color: rgba(34,211,238,.26);
+      box-shadow: var(--shadow), var(--glow);
+    }
     .hero-card::before{
       content:"";
       position:absolute;
       inset:-2px;
-      background: linear-gradient(135deg, rgba(34,211,238,.25), rgba(168,85,247,.18), rgba(244,114,182,.14));
+      background: linear-gradient(135deg, rgba(34,211,238,.28), rgba(168,85,247,.22), rgba(244,114,182,.18));
       filter: blur(22px);
-      opacity: .75;
-      transform: translate3d(0,0,0);
+      opacity: .78;
       pointer-events: none;
     }
     .hero-card > *{ position: relative; }
     .hero-title{
       font-size: 28px;
-      font-weight: 850;
+      font-weight: 900;
       letter-spacing: -.2px;
       margin: 0 0 8px;
     }
+    html[data-theme="neon"] .hero-title{ text-shadow: var(--glow); }
     .hero-desc{
       color: var(--muted);
       margin: 0 0 14px;
       max-width: 64ch;
     }
+
     .pill-row{
       display:flex;
       flex-wrap: wrap;
@@ -236,23 +237,23 @@
       color: var(--muted);
       font-size: 13px;
     }
-    .pill b{ color: var(--text); font-weight: 700; }
+    html[data-theme="neon"] .pill{
+      border-color: rgba(34,211,238,.26);
+      box-shadow: 0 0 10px rgba(34,211,238,.18);
+    }
+    .pill b{ color: var(--text); font-weight: 800; }
+    .mono{ font-variant-numeric: tabular-nums; }
 
     /* Sections */
-    .section{
-      padding: 18px 0 8px;
-    }
+    .section{ padding: 18px 0 8px; }
     .section-title{
       font-size: 18px;
-      font-weight: 800;
+      font-weight: 900;
       margin: 0 0 10px;
     }
-    .section-sub{
-      margin: 0 0 16px;
-      color: var(--muted);
-    }
+    .section-sub{ margin: 0 0 16px; color: var(--muted); }
 
-    /* Services grid */
+    /* Services */
     .grid{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
@@ -268,11 +269,13 @@
       position: relative;
       overflow: hidden;
     }
+    html[data-theme="neon"] .service-card{
+      border-color: rgba(34,211,238,.24);
+      box-shadow: var(--shadow-soft), 0 0 18px rgba(34,211,238,.15);
+    }
     @media (max-width: 768px){
       .service-card{ grid-column: span 12; }
-      .topbar-inner{ grid-template-columns: 46px 1fr 1fr; }
       .brand-sub{ display:none; }
-      .search{ max-width: 100%; }
     }
 
     .service-head{
@@ -282,11 +285,25 @@
       gap: 10px;
       margin-bottom: 10px;
     }
+
+    /* ✅ KAPITAL */
     .service-name{
-      font-weight: 800;
+      font-weight: 950;
       margin: 0;
       font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
     }
+
+    /* ✅ NEON NAME GLOW */
+    html[data-theme="neon"] .service-name{
+      color: var(--brand);
+      text-shadow:
+        0 0 10px rgba(34,211,238,.75),
+        0 0 20px rgba(34,211,238,.55),
+        0 0 36px rgba(168,85,247,.35);
+    }
+
     .service-tag{
       font-size: 12px;
       color: var(--muted);
@@ -296,12 +313,17 @@
       border-radius: 999px;
       white-space: nowrap;
     }
+    html[data-theme="neon"] .service-tag{
+      border-color: rgba(34,211,238,.22);
+      box-shadow: 0 0 10px rgba(34,211,238,.12);
+    }
+
     .service-desc{
       color: var(--muted);
       margin: 0 0 14px;
-      min-height: 38s;
     }
 
+    /* ✅ BELI GLOW */
     .btn-beli{
       display:inline-flex;
       align-items:center;
@@ -311,13 +333,23 @@
       height: 44px;
       border-radius: 14px;
       border: 1px solid rgba(37,211,102,.35);
-      background: rgba(37,211,102,.12);
+      background: rgba(37,211,102,.14);
       color: var(--text);
-      font-weight: 800;
-      letter-spacing: .2px;
+      font-weight: 950;
+      letter-spacing: .4px;
+      text-transform: uppercase;
     }
-    .btn-beli:hover{ filter: brightness(1.05); }
+    .btn-beli:hover{ filter: brightness(1.06); }
     .btn-beli:active{ transform: translateY(1px); }
+
+    html[data-theme="neon"] .btn-beli{
+      border-color: rgba(37,211,102,.55);
+      background: rgba(37,211,102,.22);
+      box-shadow:
+        0 0 10px rgba(37,211,102,.35),
+        0 0 22px rgba(37,211,102,.22),
+        0 0 30px rgba(34,211,238,.16);
+    }
 
     /* Reviews */
     .review-wrap{
@@ -327,6 +359,11 @@
       padding: 18px;
       box-shadow: var(--shadow);
     }
+    html[data-theme="neon"] .review-wrap{
+      border-color: rgba(34,211,238,.24);
+      box-shadow: var(--shadow), var(--glow);
+    }
+
     .rating-summary{
       display:flex;
       flex-wrap: wrap;
@@ -342,7 +379,7 @@
     }
     html[data-theme="neon"] .stars{
       color: var(--brand);
-      text-shadow: var(--glow);
+      text-shadow: var(--glow-strong);
     }
     .review-grid{
       display:grid;
@@ -355,6 +392,10 @@
       background: var(--panel-2);
       border-radius: var(--radius);
       padding: 14px;
+    }
+    html[data-theme="neon"] .review-card{
+      border-color: rgba(34,211,238,.2);
+      box-shadow: 0 0 14px rgba(34,211,238,.10);
     }
     @media (max-width: 992px){
       .review-card{ grid-column: span 6; }
@@ -375,18 +416,20 @@
       position: relative;
     }
     html[data-theme="light"] footer{ background: rgba(255,255,255,.7); }
+    html[data-theme="neon"] footer{
+      border-top-color: rgba(34,211,238,.28);
+      box-shadow: var(--glow);
+    }
 
     .footer-divider{
       height: 2px;
       width: 100%;
-      background: linear-gradient(90deg, transparent, rgba(34,211,238,.8), rgba(168,85,247,.6), transparent);
-      opacity: .75;
-      box-shadow: var(--glow-strong);
+      background: linear-gradient(90deg, transparent, rgba(34,211,238,.95), rgba(168,85,247,.85), transparent);
+      opacity: .9;
+      box-shadow: var(--glow-ultra);
     }
 
-    .footer-inner{
-      padding: 26px 0 18px;
-    }
+    .footer-inner{ padding: 26px 0 18px; }
     .footer-grid{
       display:grid;
       grid-template-columns: 2fr 2fr 2fr;
@@ -395,14 +438,11 @@
     @media (max-width: 768px){
       .footer-grid{ grid-template-columns: 1fr; }
     }
-    .footer-title{
-      font-weight: 850;
-      margin: 0 0 8px;
-    }
-    .footer-muted{
-      color: var(--muted);
-      margin: 0 0 12px;
-    }
+    .footer-title{ font-weight: 950; margin: 0 0 8px; }
+    html[data-theme="neon"] .footer-title{ text-shadow: var(--glow); }
+    .footer-muted{ color: rgba(255,255,255,.72); margin: 0 0 12px; }
+    html[data-theme="light"] .footer-muted{ color: rgba(15,23,42,.62); }
+
     .footer-links{
       list-style: none;
       padding: 0;
@@ -419,6 +459,10 @@
       border: 1px solid var(--border);
       background: var(--panel);
     }
+    html[data-theme="neon"] .footer-links a{
+      border-color: rgba(34,211,238,.22);
+      box-shadow: 0 0 12px rgba(34,211,238,.10);
+    }
     .footer-links a:hover{ filter: brightness(1.06); }
 
     .btn-cta{
@@ -431,57 +475,59 @@
       border: 1px solid var(--border);
       background: var(--panel);
       width: 100%;
-      font-weight: 800;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .4px;
     }
     .btn-cta.wa{
       border-color: rgba(37,211,102,.35);
       background: rgba(37,211,102,.12);
+    }
+    html[data-theme="neon"] .btn-cta.wa{
+      border-color: rgba(37,211,102,.55);
+      background: rgba(37,211,102,.20);
+      box-shadow: 0 0 16px rgba(37,211,102,.20);
     }
 
     .sub-footer{
       padding: 14px 0 18px;
       text-align:center;
       font-size: 13px;
-      color: var(--muted);
+      color: rgba(255,255,255,.72);
     }
+    html[data-theme="light"] .sub-footer{ color: rgba(15,23,42,.62); }
     html[data-theme="neon"] .sub-footer{
-      color: rgba(34,211,238,.9);
-      text-shadow: var(--glow);
+      color: rgba(34,211,238,.92);
+      text-shadow: var(--glow-strong);
     }
 
-    /* Small theme toggle: bottom-left */
-    .theme-dock{
+    /* ✅ 1 BUAT TOGGLE BULAT (bottom-left) */
+    .theme-dot{
       position: fixed;
       left: 14px;
       bottom: 14px;
       z-index: 1040;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
       border: 1px solid var(--border);
       background: var(--panel);
-      border-radius: 999px;
+      display: grid;
+      place-items: center;
       box-shadow: var(--shadow-soft);
-      padding: 6px;
-      display:flex;
-      gap: 6px;
-      align-items:center;
+      user-select: none;
     }
-    .theme-chip{
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 12px;
-      border-radius: 999px;
-      padding: 8px 10px;
-      min-width: 44px;
+    html[data-theme="neon"] .theme-dot{
+      border-color: rgba(34,211,238,.32);
+      box-shadow: var(--glow-strong);
     }
-    .theme-chip.active{
-      border-color: var(--border);
-      background: var(--panel-2);
-      color: var(--text);
-      box-shadow: var(--glow);
+    .theme-dot span{
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1;
     }
 
-    /* Floating WhatsApp: bottom-right */
+    /* Floating WhatsApp (bottom-right) */
     .wa-float{
       position: fixed;
       right: 14px;
@@ -496,6 +542,10 @@
       background: rgba(37,211,102,.16);
       box-shadow: var(--shadow-soft);
     }
+    html[data-theme="neon"] .wa-float{
+      border-color: rgba(37,211,102,.55);
+      box-shadow: 0 0 18px rgba(37,211,102,.22);
+    }
     .wa-float:active{ transform: translateY(1px); }
     .wa-badge{
       width: 40px;
@@ -503,12 +553,13 @@
       border-radius: 14px;
       display:grid;
       place-items:center;
-      font-weight: 900;
-      background: rgba(37,211,102,.2);
+      font-weight: 1000;
+      background: rgba(37,211,102,.22);
       border: 1px solid rgba(37,211,102,.35);
+      letter-spacing: .6px;
     }
 
-    /* Bootstrap modal theme tweaks */
+    /* Modal theme tweaks */
     .modal-content{
       background: rgba(10, 12, 24, .86);
       border: 1px solid var(--border);
@@ -522,20 +573,42 @@
       background: rgba(255,255,255,.92);
       color: rgba(15,23,42,.92);
     }
+    html[data-theme="neon"] .modal-content{
+      border-color: rgba(34,211,238,.28);
+      box-shadow: var(--shadow), var(--glow-strong);
+    }
     .modal-header, .modal-footer{ border-color: var(--border); }
     .btn-gotit{
       border-radius: 14px;
-      font-weight: 850;
+      font-weight: 950;
       border: 1px solid var(--border);
       background: var(--panel-2);
       color: var(--text);
       padding: 10px 14px;
       width: 100%;
+      text-transform: uppercase;
+      letter-spacing: .4px;
     }
     html[data-theme="light"] .btn-gotit{ color: rgba(15,23,42,.92); }
 
-    /* Utilities */
-    .mono{ font-variant-numeric: tabular-nums; }
+    /* Search Modal input */
+    .search-input{
+      width: 100%;
+      height: 46px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      outline: none;
+    }
+    .search-input::placeholder{ color: rgba(255,255,255,.55); }
+    html[data-theme="light"] .search-input::placeholder{ color: rgba(15,23,42,.45); }
+    html[data-theme="neon"] .search-input{
+      border-color: rgba(34,211,238,.28);
+      box-shadow: 0 0 14px rgba(34,211,238,.14);
+    }
+
     .soft{ color: var(--muted); }
     .hidden{ display: none !important; }
   </style>
@@ -559,12 +632,10 @@
           </div>
         </div>
 
-        <div class="search-wrap">
-          <div class="search-holder">
-            <div class="search-icon">🔍</div>
-            <input id="searchInput" class="search" type="search" placeholder="Cari layanan…" aria-label="Cari layanan" />
-          </div>
-        </div>
+        <!-- ✅ Search icon only -->
+        <button class="icon-btn" type="button" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="Cari layanan">
+          🔎
+        </button>
       </div>
     </div>
   </header>
@@ -618,12 +689,9 @@
         <h2 class="section-title">Layanan SMW</h2>
         <p class="section-sub">Klik layanan → tekan <b>BELI</b> → langsung chat admin via WhatsApp.</p>
 
-        <div class="grid" id="servicesGrid">
+        <div class="grid" id="servicesGrid"></div>
 
-          <!-- Cards injected by JS for consistent WA text -->
-        </div>
-
-        <div class="mt-3 small soft" id="searchHint">Tip: ketik “NPWP”, “BPJS”, “PPT”, “Pulsa” di pencarian.</div>
+        <div class="mt-3 small soft" id="searchHint">Tip: tekan icon 🔎 lalu ketik “NPWP”, “BPJS”, “PPT”, “Pulsa”.</div>
       </section>
 
       <!-- REVIEWS -->
@@ -693,11 +761,11 @@
           <div class="footer-title">Kontak</div>
 
           <a id="waMainBtn" class="btn-cta wa mb-2" href="#" target="_blank" rel="noopener">
-            📲 WhatsApp: <span class="mono">62895-3488-30020</span>
+            📲 WHATSAPP: <span class="mono">62895-3488-30020</span>
           </a>
 
           <a class="btn-cta mb-2" href="https://chat.whatsapp.com/JXg3YdgQJPj9gIvyfNOFit" target="_blank" rel="noopener">
-            👥 Gabung Grup WhatsApp
+            👥 GABUNG GRUP WHATSAPP
           </a>
 
           <div class="small soft">🟢 Online Support (08.00 – 22.00 WIB)</div>
@@ -711,12 +779,10 @@
     </div>
   </footer>
 
-  <!-- THEME TOGGLE DOCK (bottom-left small) -->
-  <div class="theme-dock" aria-label="Theme toggle">
-    <button class="theme-chip" type="button" data-theme="light" title="Light">☀</button>
-    <button class="theme-chip active" type="button" data-theme="dark" title="Dark">🌙</button>
-    <button class="theme-chip" type="button" data-theme="neon" title="Neon">⚡</button>
-  </div>
+  <!-- ✅ THEME DOT (bottom-left) -->
+  <button class="theme-dot" id="themeDot" type="button" aria-label="Ganti tema">
+    <span id="themeIcon">🌙</span>
+  </button>
 
   <!-- FLOATING WA (bottom-right) -->
   <a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="WhatsApp Chat">
@@ -743,15 +809,33 @@
     </div>
   </div>
 
-  <!-- Bootstrap JS (includes Modal, Offcanvas) -->
+  <!-- ✅ SEARCH MODAL -->
+  <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="searchLabel">Cari Layanan</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+          <input id="searchInput" class="search-input" type="search" placeholder="Ketik nama layanan… (contoh: NPWP / BPJS / PPT)" />
+          <div class="small soft mt-2">Hasil filter langsung muncul di halaman layanan.</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-gotit" data-bs-dismiss="modal">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
     // ===== CONFIG =====
-    const WA_NUMBER = "62895348830020"; // keep digits only
-    const WA_GROUP  = "https://chat.whatsapp.com/JXg3YdgQJPj9gIvyfNOFit";
+    const WA_NUMBER = "62895348830020"; // digits only
 
-    // Services (as locked)
+    // Services (locked)
     const SERVICES = [
       { name: "Pengerjaan FT", tag: "Administrasi", desc: "Bantuan pengerjaan FT dengan proses jelas dan rapi." },
       { name: "Pembuatan New Member", tag: "Member", desc: "Pembuatan/registrasi member sesuai kebutuhan." },
@@ -765,9 +849,8 @@
       { name: "Voucher Game", tag: "Digital", desc: "Voucher game cepat dan praktis." },
     ];
 
-    // ===== HELPERS =====
     function encodeWaText(text){
-      return encodeURIComponent(text).replace(/%0A/g, "%0A"); // keep line breaks
+      return encodeURIComponent(text);
     }
     function waLink(serviceName){
       const text =
@@ -803,7 +886,7 @@ Terima kasih.`;
     }
     renderServices(SERVICES);
 
-    // ===== SEARCH FILTER (real-time) =====
+    // ===== SEARCH FILTER (from modal input) =====
     const searchInput = document.getElementById("searchInput");
     const searchHint = document.getElementById("searchHint");
 
@@ -819,11 +902,19 @@ Terima kasih.`;
       });
       renderServices(filtered);
       searchHint.classList.add("hidden");
+      // auto scroll to services biar keliatan hasil
+      document.getElementById("services").scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     searchInput.addEventListener("input", (e) => filterServices(e.target.value));
 
-    // ===== Footer Quick Services -> WA with correct service =====
+    // Auto focus search input when modal opens
+    const searchModalEl = document.getElementById("searchModal");
+    searchModalEl.addEventListener("shown.bs.modal", () => {
+      setTimeout(() => searchInput.focus(), 50);
+    });
+
+    // ===== Footer Quick Services -> WA =====
     document.querySelectorAll(".footer-quick").forEach(a => {
       a.addEventListener("click", (ev) => {
         ev.preventDefault();
@@ -856,17 +947,27 @@ Terima kasih.`;
       welcomeModal.show();
     });
 
-    // ===== Theme toggle (bottom-left small) =====
-    const chips = document.querySelectorAll(".theme-chip");
+    // ===== ✅ Theme DOT (cycle) =====
+    const themeDot = document.getElementById("themeDot");
+    const themeIcon = document.getElementById("themeIcon");
+    const cycle = ["dark", "neon", "light"]; // urutan yang enak
+    const iconMap = { dark: "🌙", neon: "⚡", light: "☀" };
+
     function setTheme(theme){
       document.documentElement.setAttribute("data-theme", theme);
-      chips.forEach(c => c.classList.toggle("active", c.dataset.theme === theme));
+      themeIcon.textContent = iconMap[theme] || "🌙";
     }
-    chips.forEach(btn => {
-      btn.addEventListener("click", () => setTheme(btn.dataset.theme));
+    function getCurrentTheme(){
+      return document.documentElement.getAttribute("data-theme") || "dark";
+    }
+    themeDot.addEventListener("click", () => {
+      const current = getCurrentTheme();
+      const idx = cycle.indexOf(current);
+      const next = cycle[(idx + 1 + cycle.length) % cycle.length];
+      setTheme(next);
     });
 
-    // Default theme locked to DARK (as requested)
+    // Default locked to DARK
     setTheme("dark");
   </script>
 </body>
