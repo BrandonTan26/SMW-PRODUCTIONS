@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SMW — Smart Multi Work</title>
+  <meta name="description" content="SMW — Solusi Administrasi & Layanan Digital. Pilih layanan, klik BELI, konsultasi via WhatsApp." />
+
+  <!-- Bootstrap 5.3.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --font: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+      /* Core palette (will be overridden by theme) */
+      --bg: #070915;
+      --panel: rgba(255,255,255,.06);
+      --panel-2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --border: rgba(255,255,255,.12);
+
+      --brand: #22d3ee;      /* cyan */
+      --brand-2: #a855f7;    /* purple */
+      --accent: #f472b6;     /* pink */
+      --wa: #25D366;
+
+      --radius: 18px;
+      --shadow: 0 16px 40px rgba(0,0,0,.35);
+      --shadow-soft: 0 10px 30px rgba(0,0,0,.25);
+
+      --glow: none;          /* enabled in neon */
+      --glow-strong: none;
+      --topbar-h: 74px;
+    }
+
+    /* Themes */
+    html[data-theme="light"]{
+      --bg: #f7f7fb;
+      --panel: rgba(15, 23, 42, .04);
+      --panel-2: rgba(15, 23, 42, .06);
+      --text: rgba(15, 23, 42, .92);
+      --muted: rgba(15, 23, 42, .65);
+      --border: rgba(15, 23, 42, .12);
+      --glow: none;
+      --glow-strong: none;
+    }
+    html[data-theme="dark"]{
+      --bg: #070915;
+      --panel: rgba(255,255,255,.06);
+      --panel-2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --border: rgba(255,255,255,.12);
+      --glow: none;
+      --glow-strong: none;
+    }
+    html[data-theme="neon"]{
+      --bg: #05010f;
+      --panel: rgba(255,255,255,.06);
+      --panel-2: rgba(255,255,255,.09);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --border: rgba(34,211,238,.25);
+      --glow: 0 0 10px rgba(34,211,238,.45);
+      --glow-strong: 0 0 22px rgba(34,211,238,.55);
+    }
+
+    /* Base */
+    body{
+      font-family: var(--font);
+      background:
+        radial-gradient(1100px 600px at 20% -10%, rgba(168,85,247,.24), transparent 60%),
+        radial-gradient(900px 540px at 90% 0%, rgba(34,211,238,.22), transparent 55%),
+        radial-gradient(900px 640px at 70% 110%, rgba(244,114,182,.16), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a{ color: inherit; text-decoration: none; }
+    .container-xl{ max-width: 1120px; }
+
+    /* Topbar */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      height: var(--topbar-h);
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(0,0,0,.22);
+      border-bottom: 1px solid var(--border);
+    }
+    html[data-theme="light"] .topbar{ background: rgba(255,255,255,.72); }
+    .topbar-inner{
+      width: 100%;
+      display: grid;
+      grid-template-columns: 46px 1fr 1.6fr;
+      gap: 12px;
+      align-items: center;
+      padding: 0 14px;
+    }
+
+    .icon-btn{
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-soft);
+    }
+    .icon-btn:active{ transform: translateY(1px); }
+
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      user-select: none;
+      cursor: pointer;
+    }
+    .brand-badge{
+      width: 38px; height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: .5px;
+      background: linear-gradient(135deg, rgba(34,211,238,.35), rgba(168,85,247,.35));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: var(--glow);
+    }
+    .brand-name{
+      font-weight: 800;
+      line-height: 1;
+      font-size: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand-sub{
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-wrap{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .search{
+      width: 100%;
+      max-width: 560px;
+      height: 44px;
+      padding: 10px 14px 10px 42px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      outline: none;
+    }
+    .search::placeholder{ color: rgba(255,255,255,.55); }
+    html[data-theme="light"] .search::placeholder{ color: rgba(15,23,42,.45); }
+    .search-icon{
+      position: absolute;
+      margin-left: 14px;
+      pointer-events: none;
+      opacity: .75;
+    }
+    .search-holder{
+      position: relative;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    /* Hero */
+    .hero{
+      padding: 34px 0 18px;
+    }
+    .hero-card{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: calc(var(--radius) + 6px);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: linear-gradient(135deg, rgba(34,211,238,.25), rgba(168,85,247,.18), rgba(244,114,182,.14));
+      filter: blur(22px);
+      opacity: .75;
+      transform: translate3d(0,0,0);
+      pointer-events: none;
+    }
+    .hero-card > *{ position: relative; }
+    .hero-title{
+      font-size: 28px;
+      font-weight: 850;
+      letter-spacing: -.2px;
+      margin: 0 0 8px;
+    }
+    .hero-desc{
+      color: var(--muted);
+      margin: 0 0 14px;
+      max-width: 64ch;
+    }
+    .pill-row{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .pill b{ color: var(--text); font-weight: 700; }
+
+    /* Sections */
+    .section{
+      padding: 18px 0 8px;
+    }
+    .section-title{
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0 0 10px;
+    }
+    .section-sub{
+      margin: 0 0 16px;
+      color: var(--muted);
+    }
+
+    /* Services grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .service-card{
+      grid-column: span 6;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+    @media (max-width: 768px){
+      .service-card{ grid-column: span 12; }
+      .topbar-inner{ grid-template-columns: 46px 1fr 1fr; }
+      .brand-sub{ display:none; }
+      .search{ max-width: 100%; }
+    }
+
+    .service-head{
+      display:flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .service-name{
+      font-weight: 800;
+      margin: 0;
+      font-size: 16px;
+    }
+    .service-tag{
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .service-desc{
+      color: var(--muted);
+      margin: 0 0 14px;
+      min-height: 38s;
+    }
+
+    .btn-beli{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width: 100%;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(37,211,102,.35);
+      background: rgba(37,211,102,.12);
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .btn-beli:hover{ filter: brightness(1.05); }
+    .btn-beli:active{ transform: translateY(1px); }
+
+    /* Reviews */
+    .review-wrap{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: calc(var(--radius) + 6px);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .rating-summary{
+      display:flex;
+      flex-wrap: wrap;
+      gap:10px;
+      align-items:center;
+      margin-bottom: 12px;
+      color: var(--muted);
+    }
+    .stars{
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: #facc15;
+    }
+    html[data-theme="neon"] .stars{
+      color: var(--brand);
+      text-shadow: var(--glow);
+    }
+    .review-grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .review-card{
+      grid-column: span 4;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    @media (max-width: 992px){
+      .review-card{ grid-column: span 6; }
+    }
+    @media (max-width: 576px){
+      .review-card{ grid-column: span 12; }
+    }
+    .review-card p{ margin: 8px 0 10px; color: var(--muted); }
+    .review-card small{ color: var(--muted); }
+
+    /* Footer */
+    footer{
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,.24);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: relative;
+    }
+    html[data-theme="light"] footer{ background: rgba(255,255,255,.7); }
+
+    .footer-divider{
+      height: 2px;
+      width: 100%;
+      background: linear-gradient(90deg, transparent, rgba(34,211,238,.8), rgba(168,85,247,.6), transparent);
+      opacity: .75;
+      box-shadow: var(--glow-strong);
+    }
+
+    .footer-inner{
+      padding: 26px 0 18px;
+    }
+    .footer-grid{
+      display:grid;
+      grid-template-columns: 2fr 2fr 2fr;
+      gap: 18px;
+    }
+    @media (max-width: 768px){
+      .footer-grid{ grid-template-columns: 1fr; }
+    }
+    .footer-title{
+      font-weight: 850;
+      margin: 0 0 8px;
+    }
+    .footer-muted{
+      color: var(--muted);
+      margin: 0 0 12px;
+    }
+    .footer-links{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display:grid;
+      gap: 8px;
+    }
+    .footer-links a{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding: 9px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+    }
+    .footer-links a:hover{ filter: brightness(1.06); }
+
+    .btn-cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      width: 100%;
+      font-weight: 800;
+    }
+    .btn-cta.wa{
+      border-color: rgba(37,211,102,.35);
+      background: rgba(37,211,102,.12);
+    }
+
+    .sub-footer{
+      padding: 14px 0 18px;
+      text-align:center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    html[data-theme="neon"] .sub-footer{
+      color: rgba(34,211,238,.9);
+      text-shadow: var(--glow);
+    }
+
+    /* Small theme toggle: bottom-left */
+    .theme-dock{
+      position: fixed;
+      left: 14px;
+      bottom: 14px;
+      z-index: 1040;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 999px;
+      box-shadow: var(--shadow-soft);
+      padding: 6px;
+      display:flex;
+      gap: 6px;
+      align-items:center;
+    }
+    .theme-chip{
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 12px;
+      border-radius: 999px;
+      padding: 8px 10px;
+      min-width: 44px;
+    }
+    .theme-chip.active{
+      border-color: var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      box-shadow: var(--glow);
+    }
+
+    /* Floating WhatsApp: bottom-right */
+    .wa-float{
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 1040;
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display:grid;
+      place-items:center;
+      border: 1px solid rgba(37,211,102,.35);
+      background: rgba(37,211,102,.16);
+      box-shadow: var(--shadow-soft);
+    }
+    .wa-float:active{ transform: translateY(1px); }
+    .wa-badge{
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display:grid;
+      place-items:center;
+      font-weight: 900;
+      background: rgba(37,211,102,.2);
+      border: 1px solid rgba(37,211,102,.35);
+    }
+
+    /* Bootstrap modal theme tweaks */
+    .modal-content{
+      background: rgba(10, 12, 24, .86);
+      border: 1px solid var(--border);
+      color: var(--text);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: calc(var(--radius) + 6px);
+      box-shadow: var(--shadow);
+    }
+    html[data-theme="light"] .modal-content{
+      background: rgba(255,255,255,.92);
+      color: rgba(15,23,42,.92);
+    }
+    .modal-header, .modal-footer{ border-color: var(--border); }
+    .btn-gotit{
+      border-radius: 14px;
+      font-weight: 850;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--text);
+      padding: 10px 14px;
+      width: 100%;
+    }
+    html[data-theme="light"] .btn-gotit{ color: rgba(15,23,42,.92); }
+
+    /* Utilities */
+    .mono{ font-variant-numeric: tabular-nums; }
+    .soft{ color: var(--muted); }
+    .hidden{ display: none !important; }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="container-xl">
+      <div class="topbar-inner">
+        <button class="icon-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#smwMenu" aria-controls="smwMenu" aria-label="Buka menu">
+          ☰
+        </button>
+
+        <div class="brand" id="brandClick" title="Klik untuk info">
+          <div class="brand-badge">S</div>
+          <div class="min-w-0">
+            <div class="brand-name">SMW</div>
+            <div class="brand-sub">Smart Multi Work</div>
+          </div>
+        </div>
+
+        <div class="search-wrap">
+          <div class="search-holder">
+            <div class="search-icon">🔍</div>
+            <input id="searchInput" class="search" type="search" placeholder="Cari layanan…" aria-label="Cari layanan" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- OFFCANVAS MENU -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="smwMenu" aria-labelledby="smwMenuLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="smwMenuLabel">Menu</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Tutup"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="d-grid gap-2">
+        <a class="btn btn-outline-secondary" href="#home" data-bs-dismiss="offcanvas">Home</a>
+        <a class="btn btn-outline-secondary" href="#services" data-bs-dismiss="offcanvas">Layanan</a>
+        <a class="btn btn-outline-secondary" href="#reviews" data-bs-dismiss="offcanvas">Ulasan</a>
+        <a class="btn btn-outline-secondary" href="#contact" data-bs-dismiss="offcanvas">Kontak</a>
+      </div>
+
+      <hr class="my-4"/>
+
+      <div class="small soft">
+        <div class="fw-bold mb-1">Jam Operasional</div>
+        <div class="mono">Respon Cepat • 08.00 – 22.00 WIB</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main id="home">
+    <div class="container-xl">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-card">
+          <h1 class="hero-title">SMW — Solusi Administrasi &amp; Layanan Digital</h1>
+          <p class="hero-desc">
+            Kami bantu urusan administrasi dan layanan digital dengan proses yang jelas, cepat, dan terpercaya.
+            Pilih layanan yang kamu butuhkan, lalu klik <b>BELI</b> untuk konsultasi via WhatsApp.
+          </p>
+
+          <div class="pill-row">
+            <div class="pill">🕘 <b>Respon Cepat</b> <span class="mono">08.00 – 22.00 WIB</span></div>
+            <div class="pill">📲 <b>Chat WhatsApp</b> tanpa ribet</div>
+            <div class="pill">⭐ <b>Trusted</b> oleh banyak pelanggan</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICES -->
+      <section class="section" id="services">
+        <h2 class="section-title">Layanan SMW</h2>
+        <p class="section-sub">Klik layanan → tekan <b>BELI</b> → langsung chat admin via WhatsApp.</p>
+
+        <div class="grid" id="servicesGrid">
+
+          <!-- Cards injected by JS for consistent WA text -->
+        </div>
+
+        <div class="mt-3 small soft" id="searchHint">Tip: ketik “NPWP”, “BPJS”, “PPT”, “Pulsa” di pencarian.</div>
+      </section>
+
+      <!-- REVIEWS -->
+      <section class="section" id="reviews">
+        <div class="review-wrap">
+          <h2 class="section-title mb-1">⭐ Apa Kata Mereka Tentang SMW</h2>
+          <div class="rating-summary">
+            <div class="stars" aria-label="Rating">★★★★★</div>
+            <div><b>4.9 / 5.0</b> • Berdasarkan 100+ ulasan</div>
+          </div>
+
+          <div class="review-grid">
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p>“Proses cepat, admin responsif. NPWP beres tanpa ribet.”</p>
+              <small>— Andi, Jakarta</small>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★★</div>
+              <p>“Info jelas, step-by-step. Layanannya rapi dan aman.”</p>
+              <small>— Rina, Bekasi</small>
+            </div>
+            <div class="review-card">
+              <div class="stars">★★★★☆</div>
+              <p>“Fast response. Tinggal klik BELI langsung dibantu.”</p>
+              <small>— Dimas, Bandung</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT ANCHOR -->
+      <section class="section" id="contact">
+        <h2 class="section-title">Kontak</h2>
+        <p class="section-sub">Butuh bantuan cepat? Chat admin SMW via WhatsApp.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-divider"></div>
+    <div class="container-xl footer-inner">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">SMW</div>
+          <p class="footer-muted mb-2">Smart Multi Work<br/>Digital &amp; Administrative Solution</p>
+          <div class="small soft">
+            <div class="fw-bold mb-1">Jam Operasional</div>
+            <div class="mono">Respon Cepat • 08.00 – 22.00 WIB</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-title">Quick Services</div>
+          <ul class="footer-links">
+            <li><a href="#services" class="footer-quick" data-service="Pembuatan NPWP">🧾 Pembuatan NPWP</a></li>
+            <li><a href="#services" class="footer-quick" data-service="Pencairan BPJS (10% / Full)">🩺 Pencairan BPJS</a></li>
+            <li><a href="#services" class="footer-quick" data-service="Pengerjaan FT">📄 Pengerjaan FT</a></li>
+            <li><a href="#services" class="footer-quick" data-service="Pembuatan PPT">📊 Pembuatan PPT</a></li>
+            <li><a href="#services" class="footer-quick" data-service="Convert Pulsa">📱 Convert Pulsa</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-title">Kontak</div>
+
+          <a id="waMainBtn" class="btn-cta wa mb-2" href="#" target="_blank" rel="noopener">
+            📲 WhatsApp: <span class="mono">62895-3488-30020</span>
+          </a>
+
+          <a class="btn-cta mb-2" href="https://chat.whatsapp.com/JXg3YdgQJPj9gIvyfNOFit" target="_blank" rel="noopener">
+            👥 Gabung Grup WhatsApp
+          </a>
+
+          <div class="small soft">🟢 Online Support (08.00 – 22.00 WIB)</div>
+        </div>
+      </div>
+
+      <div class="sub-footer">
+        © 2026 SMW Productions<br/>
+        Powered by D&amp;D A Digital Creative Studio
+      </div>
+    </div>
+  </footer>
+
+  <!-- THEME TOGGLE DOCK (bottom-left small) -->
+  <div class="theme-dock" aria-label="Theme toggle">
+    <button class="theme-chip" type="button" data-theme="light" title="Light">☀</button>
+    <button class="theme-chip active" type="button" data-theme="dark" title="Dark">🌙</button>
+    <button class="theme-chip" type="button" data-theme="neon" title="Neon">⚡</button>
+  </div>
+
+  <!-- FLOATING WA (bottom-right) -->
+  <a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="WhatsApp Chat">
+    <div class="wa-badge">WA</div>
+  </a>
+
+  <!-- WELCOME MODAL (shows every refresh) -->
+  <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="welcomeLabel">Welcome to SMW</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body">
+          Selamat datang di <b>SMW</b>.<br/>
+          Kami siap membantu kebutuhan layanan administrasi dan digital Anda.<br/>
+          Silakan pilih layanan yang dibutuhkan dan klik <b>BELI</b> untuk konsultasi langsung dengan admin kami melalui WhatsApp.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-gotit" data-bs-dismiss="modal">Got it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (includes Modal, Offcanvas) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ===== CONFIG =====
+    const WA_NUMBER = "62895348830020"; // keep digits only
+    const WA_GROUP  = "https://chat.whatsapp.com/JXg3YdgQJPj9gIvyfNOFit";
+
+    // Services (as locked)
+    const SERVICES = [
+      { name: "Pengerjaan FT", tag: "Administrasi", desc: "Bantuan pengerjaan FT dengan proses jelas dan rapi." },
+      { name: "Pembuatan New Member", tag: "Member", desc: "Pembuatan/registrasi member sesuai kebutuhan." },
+      { name: "Pembuatan Area Coverage", tag: "Coverage", desc: "Penyusunan area coverage sesuai format yang dibutuhkan." },
+      { name: "Pencairan BPJS 10%", tag: "BPJS", desc: "Bagi karyawan aktif minimal 10 tahun." },
+      { name: "Pencairan BPJS Full", tag: "BPJS", desc: "Bagi karyawan yang sudah tidak bekerja di perusahaan manapun." },
+      { name: "Pembuatan NPWP", tag: "Legal", desc: "Pembuatan NPWP dengan panduan persyaratan yang jelas." },
+      { name: "Pendaftaran BPJS Kesehatan", tag: "BPJS", desc: "Bantuan pendaftaran BPJS Kesehatan hingga siap digunakan." },
+      { name: "Pembuatan PPT", tag: "Digital", desc: "PPT rapi, profesional, dan sesuai kebutuhan presentasi." },
+      { name: "Convert Pulsa", tag: "Digital", desc: "Layanan convert pulsa sesuai ketentuan yang berlaku." },
+      { name: "Voucher Game", tag: "Digital", desc: "Voucher game cepat dan praktis." },
+    ];
+
+    // ===== HELPERS =====
+    function encodeWaText(text){
+      return encodeURIComponent(text).replace(/%0A/g, "%0A"); // keep line breaks
+    }
+    function waLink(serviceName){
+      const text =
+`Halo Admin SMW,
+Saya ingin BELI layanan *${serviceName}*.
+Mohon informasi proses dan persyaratannya.
+Terima kasih.`;
+      return `https://wa.me/${WA_NUMBER}?text=${encodeWaText(text)}`;
+    }
+
+    // ===== RENDER SERVICES =====
+    const grid = document.getElementById("servicesGrid");
+    function renderServices(list){
+      grid.innerHTML = "";
+      list.forEach(s => {
+        const card = document.createElement("div");
+        card.className = "service-card";
+        card.dataset.name = s.name.toLowerCase();
+        card.dataset.tag = s.tag.toLowerCase();
+
+        card.innerHTML = `
+          <div class="service-head">
+            <h3 class="service-name">${s.name}</h3>
+            <div class="service-tag">${s.tag}</div>
+          </div>
+          <p class="service-desc">${s.desc}</p>
+          <a class="btn-beli" href="${waLink(s.name)}" target="_blank" rel="noopener">
+            🟢 BELI SEKARANG
+          </a>
+        `;
+        grid.appendChild(card);
+      });
+    }
+    renderServices(SERVICES);
+
+    // ===== SEARCH FILTER (real-time) =====
+    const searchInput = document.getElementById("searchInput");
+    const searchHint = document.getElementById("searchHint");
+
+    function filterServices(q){
+      const query = (q || "").trim().toLowerCase();
+      if (!query){
+        renderServices(SERVICES);
+        searchHint.classList.remove("hidden");
+        return;
+      }
+      const filtered = SERVICES.filter(s => {
+        return s.name.toLowerCase().includes(query) || s.tag.toLowerCase().includes(query) || s.desc.toLowerCase().includes(query);
+      });
+      renderServices(filtered);
+      searchHint.classList.add("hidden");
+    }
+
+    searchInput.addEventListener("input", (e) => filterServices(e.target.value));
+
+    // ===== Footer Quick Services -> WA with correct service =====
+    document.querySelectorAll(".footer-quick").forEach(a => {
+      a.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        const svc = a.getAttribute("data-service") || "Layanan SMW";
+        window.open(waLink(svc), "_blank", "noopener");
+      });
+    });
+
+    // ===== Main WhatsApp buttons =====
+    const waMainBtn = document.getElementById("waMainBtn");
+    const waFloat = document.getElementById("waFloat");
+    const waGeneralText =
+`Halo Admin SMW,
+Saya ingin konsultasi terkait layanan yang tersedia.
+Mohon informasinya.
+Terima kasih.`;
+    const waGeneralLink = `https://wa.me/${WA_NUMBER}?text=${encodeWaText(waGeneralText)}`;
+    waMainBtn.href = waGeneralLink;
+    waFloat.href = waGeneralLink;
+
+    // ===== Brand click -> Welcome modal =====
+    const brandClick = document.getElementById("brandClick");
+    const modalEl = document.getElementById("welcomeModal");
+    const welcomeModal = new bootstrap.Modal(modalEl, { backdrop: true, keyboard: true });
+
+    brandClick.addEventListener("click", () => welcomeModal.show());
+
+    // ===== Show welcome modal every refresh =====
+    window.addEventListener("load", () => {
+      welcomeModal.show();
+    });
+
+    // ===== Theme toggle (bottom-left small) =====
+    const chips = document.querySelectorAll(".theme-chip");
+    function setTheme(theme){
+      document.documentElement.setAttribute("data-theme", theme);
+      chips.forEach(c => c.classList.toggle("active", c.dataset.theme === theme));
+    }
+    chips.forEach(btn => {
+      btn.addEventListener("click", () => setTheme(btn.dataset.theme));
+    });
+
+    // Default theme locked to DARK (as requested)
+    setTheme("dark");
+  </script>
+</body>
+</html>
